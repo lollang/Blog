@@ -1,8 +1,23 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import BlogEntries from '../statics/data/blogs.json'
 
 Vue.use(VueRouter)
+
+const blogRoutes = Object.keys(BlogEntries).map(section => {
+  const children = BlogEntries[section].map(child => ({
+    path: child.id,
+    name: child.id,
+    component: () => import(`../markdowns/${section}/${child.id}.md`)
+  }))
+  return {
+    path: `/${section}`,
+    name: section,
+    component: () => import('../views/Blog.vue'),
+    children
+  }
+})
 
 const routes = [
   {
@@ -10,14 +25,7 @@ const routes = [
     name: 'Home',
     component: Home
   },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
+  ...blogRoutes
 ]
 
 const router = new VueRouter({

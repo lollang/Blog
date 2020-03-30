@@ -1,18 +1,88 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h1 class="headline center">{{BLOG_HEADER}}</h1>
+    <img alt="Vue logo" src="../assets/Avatar.png">
+    <div class="sections">
+      <div v-for="(section, index) in Object.keys(entries)" :key="index" class="group">
+        <h2 class="left">{{section}}</h2>
+        <div class="section" v-for="entry in entries[section]" :key="entry.id">
+          <div class="entry">
+            <h3 @click="$router.push({name: entry.id})">
+              {{entry.title}}
+              <span class="subtitle">{{entry.date}}</span>
+            </h3>
+            <p>{{entry.description}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import BLOGENTRIES from '@/statics/data/blogs.json'
+import { BLOG_HEADER } from '@/statics/constants/index'
 
 export default {
-  name: 'Home',
-  components: {
-    HelloWorld
+  name: 'home',
+  created () {
+    this.BLOG_HEADER = BLOG_HEADER
+  },
+  computed: {
+    entries () {
+      return BLOGENTRIES
+    }
   }
 }
 </script>
+<style lang="scss" scoped>
+.left {
+  text-align: left;
+}
+.center {
+  text-align: center;
+}
+.headline {
+  text-transform: uppercase;
+  margin: 2rem auto;
+  font-size: 2rem;
+}
+img {
+  display: block;
+  margin: 0 auto;
+  width: 150px;
+}
+h2 {
+  color: #35495e;
+  text-transform: capitalize;
+  margin-bottom: 1rem;
+}
+h3 {
+  color: #42b883;
+  margin-bottom: 0;
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
+  .subtitle {
+    color: grey;
+    font-size: .98rem;
+    float: right;
+    font-weight: normal;
+  }
+}
+p {
+  margin-top: .4rem;
+}
+.sections {
+  max-width: 40vw;
+  margin: 0 auto;
+  margin-top: 4rem;
+}
+.section {
+  margin-bottom: 3rem;
+}
+.group {
+  margin-bottom: 4rem;
+}
+</style>

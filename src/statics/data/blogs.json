@@ -1,0 +1,18 @@
+{
+    "Travel": [
+      {
+        "id": "travel-2020-03",
+        "date": "March 29, 2019",
+        "title": "Travel History",
+        "description": "Where I have been this month"
+      }
+    ],
+    "Economics": [
+      {
+        "id": "economics-2020-03",
+        "date": "March 20, 2020",
+        "title": "Economics Comment",
+        "description": "Example"
+      }
+    ]
+  }
