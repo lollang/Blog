@@ -1,7 +1,34 @@
 <template>
-  <div class="home">
+  <div class='home'>
+    <Burger></Burger>
+    <Sidebar>
+     <img class='img-avatar' alt='Erdan' src='../assets/Avatar.png'>
+     <ul class='flex-container space-around'>
+      <li>
+        <h5>{{POSTS}}</h5>
+        <p>0</p>
+      </li>
+      <li>
+        <h5>{{CATEGORY}}</h5>
+        <p>0</p>
+      </li>
+      <li>
+        <h5>{{TAGS}}</h5>
+        <p>0</p>
+      </li>
+     </ul>
+     <h4>{{DESCRIPTION}}</h4>
+     <div class='flex-container space-around'>
+       <a :href=GITHUB_LINK>
+        <img class='img' src='../assets/icon-github.png' width="25" height="25" alt="Computer Hope">
+       </a>
+       <a :href=INSTAGRAM_LINK>
+        <img class='img' src='../assets/icon-instagram.png' width="25" height="25" alt="Computer Hope">
+       </a>
+     </div>
+    </Sidebar>
     <h1 class="headline center">{{BLOG_HEADER}}</h1>
-    <img alt="Vue logo" src="../assets/Avatar.png">
+    <google-map />
     <div class="sections">
       <div v-for="(section, index) in Object.keys(entries)" :key="index" class="group">
         <h2 class="left">{{section}}</h2>
@@ -21,12 +48,26 @@
 
 <script>
 import BLOGENTRIES from '@/statics/data/blogs.json'
-import { BLOG_HEADER } from '@/statics/constants/index'
+import Burger from '@/components/Menu/Burger.vue'
+import Sidebar from '@/components/Menu/Sidebar.vue'
+import { BLOG_HEADER, DESCRIPTION, GITHUB_LINK, INSTAGRAM_LINK, POSTS, CATEGORY, TAGS } from '@/statics/constants/index'
+import GoogleMap from '@/components/GoogleMap'
 
 export default {
   name: 'home',
+  components: {
+    Burger,
+    Sidebar,
+    GoogleMap
+  },
   created () {
     this.BLOG_HEADER = BLOG_HEADER
+    this.DESCRIPTION = DESCRIPTION
+    this.GITHUB_LINK = GITHUB_LINK
+    this.INSTAGRAM_LINK = INSTAGRAM_LINK
+    this.POSTS = POSTS
+    this.CATEGORY = CATEGORY
+    this.TAGS = TAGS
   },
   computed: {
     entries () {
@@ -44,22 +85,29 @@ export default {
 }
 .headline {
   text-transform: uppercase;
-  margin: 2rem auto;
+  margin: 0 auto 2rem;
   font-size: 2rem;
 }
-img {
+.img-avatar {
   display: block;
-  margin: 0 auto;
+  margin: 2rem auto;
   width: 150px;
+}
+.flex-container{
+  padding: 0;
+  margin-bottom: 4rem;
+  list-style: none;
+  display: flex;
+}
+.space-around {
+  justify-content: space-around;
 }
 h2 {
   color: #35495e;
   text-transform: capitalize;
-  margin-bottom: 1rem;
 }
 h3 {
   color: #42b883;
-  margin-bottom: 0;
   cursor: pointer;
   &:hover {
     text-decoration: underline;
@@ -71,8 +119,22 @@ h3 {
     font-weight: normal;
   }
 }
+h4 {
+  margin: 2rem auto;
+  font-size: 1.2rem;
+  color: white;
+}
 p {
   margin-top: .4rem;
+}
+ul li {
+  color: #fff;
+  display: inline-block;
+  border-right:2px solid;
+  width: 100%;
+}
+li:last-child {
+    border-right:none;
 }
 .sections {
   max-width: 40vw;

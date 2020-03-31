@@ -5,8 +5,12 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    isNavOpen: false
   },
   mutations: {
+    toggleNav () {
+      this.state.isNavOpen = !this.state.isNavOpen
+    }
   },
   actions: {
   },
