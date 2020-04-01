@@ -4,15 +4,10 @@
         "id": "travel-2020-03",
         "date": "March 30, 2019",
         "title": "2020-3月份旅行總結",
-        "description": "總結下今年到目前爲止去過的地方，還有已經去過的所有地方,很久沒寫blog，就從這裏開始吧"
-      }
-    ],
-    "Economics": [
-      {
-        "id": "economics-2020-03",
-        "date": "March 20, 2020",
-        "title": "Economics Comment",
-        "description": "Example"
+        "description": "总结下今年到目前为止去过的地方，还有已经去过的所有地方,很久没写blog，就从这里开始吧",
+        "displayMap": true,
+        "category": "旅行",
+        "tags": "旅行"
       }
     ]
   }

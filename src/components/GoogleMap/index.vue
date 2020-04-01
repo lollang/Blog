@@ -2,30 +2,34 @@
   <div>
     <gmap-map
       :center="center"
-      :zoom="12"
+      :zoom="zoom"
       style="width:100%;  height: 400px;"
     >
-      <gmap-marker
-        :key="index"
-        v-for="(m, index) in markers"
-        :position="m.position"
-        @click="center=m.position"
-      ></gmap-marker>
+    <GmapCircle
+      v-for="(pin, index) in markers"
+      :key="index"
+      :center="pin.position"
+      :radius='10000'
+      :visible="true"
+      :options="{icons:gmapIcons,fillColor:'red',fillOpacity:0.5,strokeColor:'#fff',strokeWeight: 1}"
+    ></GmapCircle>
     </gmap-map>
   </div>
 </template>
 
 <script>
+import { MAP_DEFAULT_CENTER, MAP_DEFAULT_ZOOM } from '@/statics/constants'
+import LOCATIONS from '@/statics/places/'
+
 export default {
   name: 'GoogleMap',
   data () {
     return {
       // default to Montreal to keep it simple
       // change this to whatever makes sense
-      center: { lat: 45.508, lng: -73.587 },
-      markers: [],
-      places: [],
-      currentPlace: null
+      center: { lat: MAP_DEFAULT_CENTER.lat, lng: MAP_DEFAULT_CENTER.lng },
+      zoom: MAP_DEFAULT_ZOOM,
+      markers: LOCATIONS
     }
   },
 
@@ -34,18 +38,6 @@ export default {
   },
 
   methods: {
-    addMarker () {
-      if (this.currentPlace) {
-        const marker = {
-          lat: this.currentPlace.geometry.location.lat(),
-          lng: this.currentPlace.geometry.location.lng()
-        }
-        this.markers.push({ position: marker })
-        this.places.push(this.currentPlace)
-        this.center = marker
-        this.currentPlace = null
-      }
-    },
     geolocate: function () {
       navigator.geolocation.getCurrentPosition(position => {
         this.center = {

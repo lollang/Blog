@@ -7,3 +7,14 @@ export const INSTAGRAM_LINK = 'https://github.com/lollang'
 export const POSTS = 'Posts'
 export const CATEGORY = 'Category'
 export const TAGS = 'Tags'
+
+// Google Map
+export const MAP_DEFAULT_CENTER = {
+    lat: 38.892061,
+    lng: -90.433776
+}
+export const MAP_DEFAULT_ZOOM = 4
+
+export const DISPLAY_MAP_RULES = {
+    Travel: true
+}
