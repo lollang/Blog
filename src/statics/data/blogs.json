@@ -9,5 +9,16 @@
         "category": "旅行",
         "tags": "旅行"
       }
+    ],
+    "Game": [
+      {
+        "id": "game-2020-04-01",
+        "date": "April 01, 2020",
+        "title": "游戲設計-01",
+        "description": "游戲内容來源於韓國綜藝游戲的法則，打賞把這個游戲實現為手機版",
+        "displayMap": true,
+        "category": "游戲",
+        "tags": "游戲設計"
+      }
     ]
   }

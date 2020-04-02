@@ -6,16 +6,22 @@
         <img class='img-avatar' alt='Erdan' src='../assets/Avatar.png'>
         <ul class='flex-container space-around'>
           <li>
-            <h5>{{POSTS}}</h5>
-            <p>{{posts}}</p>
+            <span @click="handleSideBarClick(0)">
+              <h5>{{POSTS}}</h5>
+              <p>{{posts}}</p>
+            </span>
           </li>
           <li>
-            <h5>{{CATEGORY}}</h5>
-            <p>{{category}}</p>
+            <span @click="handleSideBarClick(1)">
+              <h5>{{CATEGORY}}</h5>
+              <p>{{category}}</p>
+            </span>
           </li>
           <li>
-            <h5>{{TAGS}}</h5>
-            <p>{{Object.keys(tags).length}}</p>
+            <span @click="handleSideBarClick(2)">
+              <h5>{{TAGS}}</h5>
+              <p>{{Object.keys(tags).length}}</p>
+            </span>
           </li>
         </ul>
         <p class="left">{{DESCRIPTION}}</p>
@@ -29,8 +35,30 @@
         </div>
       </div>
     </Sidebar>
-    <h1 class="headline center">{{BLOG_HEADER}}</h1>
-    <div class="sections">
+    <div class="center">
+      <h1 class="headline">{{BLOG_HEADER}}</h1>
+      <div class="flex-container justify-content">
+        <div class="flex-container-sparse" :key="index" v-for="(item,index) in TABS">
+          <a class="tab left"  @click="setTabIndex(index)" :class="{'active-tab':index == curTabIndex}">
+            {{item.tabname}}
+          </a>
+        </div>
+      </div>
+    </div>
+    <div v-if="curTabIndex===0" class="sections">
+      <div v-for="(section, index) in Object.keys(entries)" :key="index" class="group">
+        <div class="section left" v-for="entry in entries[section]" :key="entry.id">
+          <div class="entry">
+            <h3 @click="$router.push({name: entry.id})">
+              {{entry.title}}
+              <span class="subtitle">{{entry.date}}</span>
+            </h3>
+            <p>{{entry.description}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div v-else-if="curTabIndex===1" class="sections">
       <div v-for="(section, index) in Object.keys(entries)" :key="index" class="group">
         <h2 class="left">{{section}}</h2>
         <div class="section left" v-for="entry in entries[section]" :key="entry.id">
@@ -44,6 +72,7 @@
         </div>
       </div>
     </div>
+    <div v-else>Tags</div>
   </div>
 </template>
 
@@ -51,7 +80,8 @@
 import BLOGENTRIES from '@/statics/data/blogs.json'
 import Burger from '@/components/Menu/Burger.vue'
 import Sidebar from '@/components/Menu/Sidebar.vue'
-import { BLOG_HEADER, DESCRIPTION, GITHUB_LINK, INSTAGRAM_LINK, POSTS, CATEGORY, TAGS } from '@/statics/constants/index'
+import { BLOG_HEADER, DESCRIPTION, GITHUB_LINK, INSTAGRAM_LINK, POSTS, CATEGORY, TAGS, TABS } from '@/statics/constants/index'
+import store from '@/store'
 
 export default {
   name: 'home',
@@ -68,10 +98,23 @@ export default {
       INSTAGRAM_LINK: INSTAGRAM_LINK,
       POSTS: POSTS,
       CATEGORY: CATEGORY,
-      TAGS: TAGS
+      TAGS: TAGS,
+      TABS: TABS
+    }
+  },
+  methods: {
+    setTabIndex (index) {
+      store.commit('setTabIndex', index)
+    },
+    handleSideBarClick (index) {
+      store.commit('toggleNav')
+      store.commit('setTabIndex', index)
     }
   },
   computed: {
+    curTabIndex () {
+      return store.state.tabIndex
+    },
     entries () {
       return BLOGENTRIES
     }
@@ -92,6 +135,7 @@ export default {
   text-transform: uppercase;
   margin: 0 auto 2rem;
   font-size: 2rem;
+  font-weight: bolder;
 }
 .img-avatar {
   display: block;
@@ -104,8 +148,17 @@ export default {
   list-style: none;
   display: flex;
 }
+.flex-container-sparse {
+  padding: 0 3rem;
+}
 .space-around {
   justify-content: space-around;
+}
+.justify-content {
+  justify-content: center;
+}
+a, span {
+  cursor: pointer;
 }
 h2 {
   color: #35495e;
@@ -130,8 +183,12 @@ h4 {
   font-size: 1.2rem;
   color: white;
 }
+h5 {
+  margin-top: 0;
+}
 p {
   margin-top: 0rem;
+  margin-bottom: 0rem;
 }
 ul li {
   display: inline-block;
@@ -152,5 +209,15 @@ li:last-child {
 }
 .group {
   margin-bottom: 4rem;
+}
+.tab {
+  &:hover {
+    font-weight: bolder;
+  }
+}
+.active-tab {
+  border:none;
+  border-bottom:3px solid #000;
+  font-weight: bolder;
 }
 </style>

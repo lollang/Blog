@@ -8,6 +8,21 @@ export const POSTS = 'Posts'
 export const CATEGORY = 'Category'
 export const TAGS = 'Tags'
 
+export const TABS = [
+    {
+      tabname: 'POSTS',
+      taburl: 'tab1'
+    },
+    {
+      tabname: 'CATEGORY',
+      taburl: 'tab2'
+    },
+    {
+      tabname: 'TAGS',
+      taburl: 'tab3'
+    }
+]
+
 // Google Map
 export const MAP_DEFAULT_CENTER = {
     lat: 38.892061,

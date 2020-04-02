@@ -5,11 +5,15 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        isNavOpen: false
+        isNavOpen: false,
+        tabIndex: 0
     },
     mutations: {
         toggleNav () {
             this.state.isNavOpen = !this.state.isNavOpen
+        },
+        setTabIndex (state, index) {
+            this.state.tabIndex = index
         }
     },
     actions: {},
